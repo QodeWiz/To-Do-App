@@ -1,20 +1,10 @@
-import { Meteor } from "meteor/meteor";
-import { TasksCollection } from "/imports/api/TasksCollection";
-import "../imports/api/TasksPublications"; 
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { App } from "../imports/ui/App";
+import "./main.css";
 
-const insertTask = (taskText) =>
-  TasksCollection.insertAsync({ text: taskText });
-
-Meteor.startup(async () => {
-  if ((await TasksCollection.find().countAsync()) === 0) {
-    [
-      "First Task",
-      "Second Task",
-      "Third Task",
-      "Fourth Task",
-      "Fifth Task",
-      "Sixth Task",
-      "Seventh Task",
-    ].forEach(insertTask);
-  }
+Meteor.startup(() => {
+  const container = document.getElementById("react-target");
+  const root = createRoot(container);
+  root.render(<App />);
 });
