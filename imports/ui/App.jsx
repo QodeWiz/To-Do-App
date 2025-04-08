@@ -9,6 +9,8 @@ export const App = () => {
   const tasks = useTracker(() =>
     TasksCollection.find({}, { sort: { createdAt: -1 } }).fetch()
   );
+  const handleDelete = ({ _id }) =>
+    Meteor.callAsync("tasks.delete", { _id });
   const handleToggleChecked = ({ _id, isChecked }) =>
     Meteor.callAsync("tasks.toggleChecked", { _id, isChecked });
 
@@ -27,6 +29,7 @@ export const App = () => {
             key={task._id}
             task={task}
             onCheckboxClick={handleToggleChecked}
+            onDeleteClick={handleDelete}
           />
         ))}
       </ul>
